@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+<head>
+    <title>Validated Page</title>
+    <link rel='StyleSheet' href='css/common.css' type='text/css'>
+</head>
+<body>
+
+<div id="message">
+    Checking your validation ...
+</div>
+
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+
+        console.log("about to validate user");
+        $.get("validatedaction")
+         .done(handleValidationResult)
+         .fail(function() {
+             alert("error when attempting to validate user");
+         });
+
+        function handleValidationResult(response) {
+            console.log("validation complete, response = " + response)
+            if (response === "LOGGED_IN") {
+                $("#message").html("You're logged in!");
+            }
+            else if (response === "NOT_LOGGED_IN") {
+                window.location.replace("signin.html")
+            }
+            else {
+                alert("unknown response code: " + response);
+            }
+        }
+    });
+</script>
+
+</body>
+</html>

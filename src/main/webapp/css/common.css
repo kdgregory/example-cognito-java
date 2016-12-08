@@ -1,0 +1,47 @@
+BODY {
+    margin: 0;
+    border: 0;
+    padding: 0;
+    font-family: Calibri, "Times New Roman", Times, serif;
+    font-size: 14pt;
+    color: #002564; background-color: #F8FFFF;
+}
+
+DIV.container {
+    position: relative;
+    width: 40%;
+    left: 25%;
+    padding: 1em;
+}
+
+TABLE.login TH {
+    padding: 0.25em;
+    text-align: left;
+}
+
+TABLE.login TD {
+    padding: 0.25em;
+}
+
+P.actionDesc {
+    margin-top: 4em;
+}
+
+INPUT {
+    padding: 0.5em;
+}
+
+BUTTON {
+    padding: 0.5em 4em 0.5em 4em;
+    border-radius: 8px;
+    font-size: large;
+    font-weight: bold;
+}
+
+BUTTON.preferredButton {
+    background-color: #60C060;
+}
+
+BUTTON.secondaryButton {
+    background-color: #90A0D0;
+}

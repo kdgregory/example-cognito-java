@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+<head>
+    <title>Confirm Signup</title>
+    <link rel='StyleSheet' href='css/common.css' type='text/css'>
+</head>
+<body>
+<div class="container">
+
+    <p class="actionDesc">
+        Please enter your email address, the temporary password that you received in the email,
+        and a permanent password (twice). Then click Confirm.
+    <form name="confirm" action="#">
+        <table class="login">
+        <tr><th><label for="EMAIL">Email address:</label></th>
+            <td><input id="confirmInputEmail" name="EMAIL" type="email" size=40 maxlength=128 autofocus></input>
+        <tr><th><label for="TEMPORARY_PASSWORD">Temporary Password:</label></th>
+            <td><input id="confirmInputTemporaryPassword" name="TEMPORARY_PASSWORD" type="password"></input>
+        <tr><th><label for="PASSWORD">Permanent Password:</label></th>
+            <td><input id="confirmInputPassword" name="PASSWORD" type="password"></input>
+        <tr><th><label for="CONFIRM_PASSWORD">Confirm Permanent Password:</label></th>
+            <td><input id="confirmInputPassword2" name="CONFIRM_PASSWORD" type="password"></input>
+        <tr><td>&nbsp;</td>
+            <td> <button id="confirmButton" class="preferredButton" type="button">Confirm Signup</button> </td>
+        </table>
+    </form>
+</div>
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+
+        $("#confirmButton").click(function(event) {
+            doSignIn($("#confirmInputEmail").val(), $("#confirmInputTemporaryPassword").val(),
+                     $("#confirmInputPassword").val(), $("#confirmInputPassword2").val());
+            event.preventDefault();
+        });
+
+        function doSignIn(email, temporaryPassword, finalPassword, finalPassword2) {
+            console.log("about to confirm sign-up; username = " + email);
+            if (! (finalPassword === finalPassword2)) {
+                alert("Permanent password and confirmation don't match, try again!");
+            }
+            else {
+                $.post("confirmsignup", { EMAIL: email, TEMPORARY_PASSWORD: temporaryPassword, PASSWORD: finalPassword })
+                 .done(handleConfirmResult)
+                 .fail(function() {
+                     alert("error when attempting to confirm sign-up");
+                 });
+            }
+        }
+
+        function handleConfirmResult(response) {
+            console.log("signup confirmation complete, response = " + response)
+            if (response === "INVALID_REQUEST") {
+                alert("you didn't fill in all fields!");
+            }
+            else if (response === "NO_SUCH_USER") {
+                alert("incorrect userid or temporary password, try again!");
+            }
+            else if (response === "LOGGED_IN") {
+                window.location.replace("validated-page.html")
+            }
+            else {
+                alert("unknown response code: " + response);
+            }
+        }
+    });
+</script>
+</body>
+</html>
