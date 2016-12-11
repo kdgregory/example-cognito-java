@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.amazonaws.services.cognitoidp.model.*;
 import net.sf.kdgcommons.lang.StringUtil;
+import net.sf.kdgcommons.lang.ThreadUtil;
 
 
 /**
@@ -66,6 +67,12 @@ public class SignIn extends AbstractCognitoServlet
         {
             logger.debug("invalid credentials: {}", emailAddress);
             reportResult(response, Constants.ResponseMessages.NO_SUCH_USER);
+        }
+        catch (TooManyRequestsException ex)
+        {
+            logger.warn("caught TooManyRequestsException, delaying then retrying");
+            ThreadUtil.sleepQuietly(250);
+            doPost(request, response);
         }
     }
 

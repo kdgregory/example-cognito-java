@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.amazonaws.services.cognitoidp.model.*;
 import net.sf.kdgcommons.lang.StringUtil;
+import net.sf.kdgcommons.lang.ThreadUtil;
 
 
 /**
@@ -58,7 +59,6 @@ public class ConfirmSignUp extends AbstractCognitoServlet
                 throw new RuntimeException("unexpected challenge: " + initialResponse.getChallengeName());
             }
 
-
             Map<String,String> challengeResponses = new HashMap<String,String>();
             challengeResponses.put("USERNAME", emailAddress);
             challengeResponses.put("PASSWORD", tempPassword);
@@ -91,6 +91,12 @@ public class ConfirmSignUp extends AbstractCognitoServlet
         {
             logger.debug("invalid credentials: {}", emailAddress);
             reportResult(response, Constants.ResponseMessages.NO_SUCH_USER);
+        }
+        catch (TooManyRequestsException ex)
+        {
+            logger.warn("caught TooManyRequestsException, delaying then retrying");
+            ThreadUtil.sleepQuietly(250);
+            doPost(request, response);
         }
     }
 

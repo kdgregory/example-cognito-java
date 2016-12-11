@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.amazonaws.services.cognitoidp.model.*;
 import net.sf.kdgcommons.lang.StringUtil;
+import net.sf.kdgcommons.lang.ThreadUtil;
 
 
 /**
@@ -53,6 +54,12 @@ public class SignUp extends AbstractCognitoServlet
         {
             logger.debug("user already exists: {}", emailAddress);
             reportResult(response, Constants.ResponseMessages.USER_ALREADY_EXISTS);
+        }
+        catch (TooManyRequestsException ex)
+        {
+            logger.warn("caught TooManyRequestsException, delaying then retrying");
+            ThreadUtil.sleepQuietly(250);
+            doPost(request, response);
         }
     }
 

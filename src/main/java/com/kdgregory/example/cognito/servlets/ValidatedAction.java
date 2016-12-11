@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sf.kdgcommons.lang.StringUtil;
+import net.sf.kdgcommons.lang.ThreadUtil;
 
 import com.amazonaws.services.cognitoidp.model.AWSCognitoIdentityProviderException;
 import com.amazonaws.services.cognitoidp.model.AdminInitiateAuthRequest;
@@ -19,6 +20,7 @@ import com.amazonaws.services.cognitoidp.model.AuthFlowType;
 import com.amazonaws.services.cognitoidp.model.GetUserRequest;
 import com.amazonaws.services.cognitoidp.model.GetUserResult;
 import com.amazonaws.services.cognitoidp.model.NotAuthorizedException;
+import com.amazonaws.services.cognitoidp.model.TooManyRequestsException;
 
 
 /**
@@ -89,6 +91,12 @@ public class ValidatedAction extends AbstractCognitoServlet
                 logger.warn("exception during validation: {}", ex.getMessage());
                 reportResult(response, Constants.ResponseMessages.NOT_LOGGED_IN);
             }
+        }
+        catch (TooManyRequestsException ex)
+        {
+            logger.warn("caught TooManyRequestsException, delaying then retrying");
+            ThreadUtil.sleepQuietly(250);
+            doPost(request, response);
         }
     }
 
