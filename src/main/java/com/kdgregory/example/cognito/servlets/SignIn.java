@@ -55,8 +55,15 @@ public class SignIn extends AbstractCognitoServlet
                 reportResult(response, Constants.ResponseMessages.LOGGED_IN);
                 return;
             }
-
-            reportResult(response, cognitoResult.getChallengeName());
+            else if (ChallengeNameType.fromValue(cognitoResult.getChallengeName()) == ChallengeNameType.NEW_PASSWORD_REQUIRED)
+            {
+                logger.debug("{} attempted to sign in with temporary password", emailAddress);
+                reportResult(response, Constants.ResponseMessages.FORCE_PASSWORD_CHANGE);
+            }
+            else
+            {
+                throw new RuntimeException("unexpected challenge on signin: " + cognitoResult.getChallengeName());
+            }
         }
         catch (UserNotFoundException ex)
         {

@@ -70,6 +70,9 @@
             else if (response === "LOGGED_IN") {
                 window.location.replace("validated-page.html")
             }
+            else if (response === "FORCE_PASSWORD_CHANGE") {
+                window.location.replace("confirm-signup.html")
+            }
             else {
                 alert("unknown response code: " + response);
             }

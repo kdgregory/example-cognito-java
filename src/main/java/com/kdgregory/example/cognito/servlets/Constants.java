@@ -52,6 +52,11 @@ public abstract class Constants
          *  User was created, must log in and change password.
          */
         public final static String USER_CREATED = "USER_CREATED";
+        
+        /**
+         *  New user attempted to login via normal signin page, needs to go to signup-confirm page.
+         */
+        public final static String FORCE_PASSWORD_CHANGE = "FORCE_PASSWORD_CHANGE";
     }
 
 
