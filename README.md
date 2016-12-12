@@ -11,3 +11,16 @@ Based on the documentation, reading the Android source code, and a bunch of expe
 There will be a blog post that describes this code in more detail.
 
 If you believe that I'm using the tool wrongly, feel free to open an issue.
+
+
+## Building and Running
+
+Start by creating the user pool. You can do this manually, or by running the provided script:
+
+    > src/scripts/cognito-create-userpool.sh Example Example
+    User Pool ID:  us-east-1_rCQ6gAd1Q
+    Client ID:     5co5s8e43krcdps2lrp4fo301i
+
+Update `src/main/webapp/WEB-INF/web.xml`, setting the initialization parameters `cognito_pool_id` and `cognito_client_id` to the values output in the previous step.
+
+Build using Maven, and deploy to your favorite app-server.

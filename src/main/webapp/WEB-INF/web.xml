@@ -5,12 +5,12 @@
 
     <context-param>
         <param-name>cognito_pool_id</param-name>
-        <param-value>us-east-1_iBCSRXJBD</param-value>
+        <param-value>us-east-1_rCQ6gAd1Q</param-value>
     </context-param>
 
     <context-param>
         <param-name>cognito_client_id</param-name>
-        <param-value>3nhg013b4uqo5b6dtr36j5bbus</param-value>
+        <param-value>5co5s8e43krcdps2lrp4fo301i</param-value>
     </context-param>
 
     <servlet>
