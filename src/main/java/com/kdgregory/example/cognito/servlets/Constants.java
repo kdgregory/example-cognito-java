@@ -57,6 +57,11 @@ public abstract class Constants
          *  New user attempted to login via normal signin page, needs to go to signup-confirm page.
          */
         public final static String FORCE_PASSWORD_CHANGE = "FORCE_PASSWORD_CHANGE";
+        
+        /**
+         *  Returned when user submits a permanent password that doesn't meet criteria.
+         */
+        public final static String INVALID_PASSWORD = "INVALID_PASSWORD";
     }
 
 

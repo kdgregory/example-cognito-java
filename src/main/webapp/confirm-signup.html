@@ -58,6 +58,9 @@
             else if (response === "NO_SUCH_USER") {
                 alert("incorrect userid or temporary password, try again!");
             }
+            else if (response === "INVALID_PASSWORD") {
+                alert("password does not meet requirements (at least 8 characters, with a mix of uppercase, lowercase, and numbers)");
+            }
             else if (response === "LOGGED_IN") {
                 window.location.replace("validated-page.html")
             }

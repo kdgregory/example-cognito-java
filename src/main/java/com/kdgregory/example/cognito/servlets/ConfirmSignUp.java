@@ -82,6 +82,11 @@ public class ConfirmSignUp extends AbstractCognitoServlet
                 throw new RuntimeException("unexpected challenge: " + finalResponse.getChallengeName());
             }
         }
+        catch (InvalidPasswordException ex)
+        {
+            logger.debug("{} submitted invalid password", emailAddress);
+            reportResult(response, Constants.ResponseMessages.INVALID_PASSWORD);
+        }
         catch (UserNotFoundException ex)
         {
             logger.debug("not found: {}", emailAddress);
