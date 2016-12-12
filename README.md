@@ -23,4 +23,6 @@ Start by creating the user pool. You can do this manually, or by running the pro
 
 Update `src/main/webapp/WEB-INF/web.xml`, setting the initialization parameters `cognito_pool_id` and `cognito_client_id` to the values output in the previous step.
 
-Build using Maven, and deploy to your favorite app-server.
+You can build with Maven and deploy to your favorite app-server, import into your favorite IDE, or run with the [Jetty plugin](https://www.eclipse.org/jetty/documentation/9.4.x/jetty-maven-plugin.html):
+
+    mvn jetty:run
