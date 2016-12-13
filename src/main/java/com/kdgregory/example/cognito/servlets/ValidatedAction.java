@@ -74,10 +74,7 @@ public class ValidatedAction extends AbstractCognitoServlet
             GetUserResult initialResponse = cognitoClient.getUser(initialRequest);
 
             logger.debug("successful validation for {}", initialResponse.getUsername());
-            // note: the access token was valid but not cached; this happens when the app
-            //       was restarted (so the cache is empty), so we'll re-cache with a shorter
-            //       timeout
-            tokenCache.addToken(accessToken, 10 * 60 * 1000);
+            tokenCache.addToken(accessToken);
             reportResult(response, Constants.ResponseMessages.LOGGED_IN);
         }
         catch (NotAuthorizedException ex)
