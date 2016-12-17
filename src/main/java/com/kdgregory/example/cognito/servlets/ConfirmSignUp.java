@@ -54,7 +54,7 @@ public class ConfirmSignUp extends AbstractCognitoServlet
                     .withUserPoolId(cognitoPoolId());
 
             AdminInitiateAuthResult initialResponse = cognitoClient.adminInitiateAuth(initialRequest);
-            if (ChallengeNameType.fromValue(initialResponse.getChallengeName()) != ChallengeNameType.NEW_PASSWORD_REQUIRED)
+            if (! ChallengeNameType.NEW_PASSWORD_REQUIRED.name().equals(initialResponse.getChallengeName()))
             {
                 throw new RuntimeException("unexpected challenge: " + initialResponse.getChallengeName());
             }
