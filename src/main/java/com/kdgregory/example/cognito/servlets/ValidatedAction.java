@@ -128,6 +128,12 @@ public class ValidatedAction extends AbstractCognitoServlet
                 reportResult(response, Constants.ResponseMessages.NOT_LOGGED_IN);
             }
         }
+        catch (TooManyRequestsException ex)
+        {
+            logger.warn("caught TooManyRequestsException, delaying then retrying");
+            ThreadUtil.sleepQuietly(250);
+            attemptRefresh(refreshToken, response);
+        }
         catch (AWSCognitoIdentityProviderException ex)
         {
             logger.debug("exception during token refresh: {}", ex.getMessage());
