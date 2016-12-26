@@ -36,14 +36,16 @@ public class SignUp extends AbstractCognitoServlet
 
         try
         {
-           AttributeType emailAttribute = new AttributeType()
-                                           .withName("email")
-                                           .withValue(emailAddress);
-
             AdminCreateUserRequest cognitoRequest = new AdminCreateUserRequest()
                     .withUserPoolId(cognitoPoolId())
                     .withUsername(emailAddress)
-                    .withUserAttributes(emailAttribute)
+                    .withUserAttributes(
+                            new AttributeType()
+                                .withName("email")
+                                .withValue(emailAddress),
+                            new AttributeType()
+                                .withName("email_verified")
+                                .withValue("true"))
                     .withDesiredDeliveryMediums(DeliveryMediumType.EMAIL)
                     .withForceAliasCreation(Boolean.FALSE);
 
