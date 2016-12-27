@@ -70,10 +70,10 @@ public class ValidatedAction extends AbstractCognitoServlet
 
         try
         {
-            GetUserRequest initialRequest = new GetUserRequest().withAccessToken(accessToken);
-            GetUserResult initialResponse = cognitoClient.getUser(initialRequest);
+            GetUserRequest authRequest = new GetUserRequest().withAccessToken(accessToken);
+            GetUserResult authResponse = cognitoClient.getUser(authRequest);
 
-            logger.debug("successful validation for {}", initialResponse.getUsername());
+            logger.debug("successful validation for {}", authResponse.getUsername());
             tokenCache.addToken(accessToken);
             reportResult(response, Constants.ResponseMessages.LOGGED_IN);
         }
@@ -145,7 +145,7 @@ public class ValidatedAction extends AbstractCognitoServlet
     @Override
     public String getServletInfo()
     {
-        return "Handles user signup";
+        return "Checks authorization based on tokens stored in cookies";
     }
 
 }

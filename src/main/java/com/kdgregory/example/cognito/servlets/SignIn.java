@@ -42,27 +42,27 @@ public class SignIn extends AbstractCognitoServlet
             authParams.put("USERNAME", emailAddress);
             authParams.put("PASSWORD", password);
 
-            AdminInitiateAuthRequest cognitoRequest = new AdminInitiateAuthRequest()
+            AdminInitiateAuthRequest authRequest = new AdminInitiateAuthRequest()
                     .withAuthFlow(AuthFlowType.ADMIN_NO_SRP_AUTH)
                     .withAuthParameters(authParams)
                     .withClientId(cognitoClientId())
                     .withUserPoolId(cognitoPoolId());
 
-            AdminInitiateAuthResult cognitoResponse = cognitoClient.adminInitiateAuth(cognitoRequest);
-            if (StringUtil.isBlank(cognitoResponse.getChallengeName()))
+            AdminInitiateAuthResult authResponse = cognitoClient.adminInitiateAuth(authRequest);
+            if (StringUtil.isBlank(authResponse.getChallengeName()))
             {
-                updateCredentialCookies(response, cognitoResponse.getAuthenticationResult());
+                updateCredentialCookies(response, authResponse.getAuthenticationResult());
                 reportResult(response, Constants.ResponseMessages.LOGGED_IN);
                 return;
             }
-            else if (ChallengeNameType.NEW_PASSWORD_REQUIRED.name().equals(cognitoResponse.getChallengeName()))
+            else if (ChallengeNameType.NEW_PASSWORD_REQUIRED.name().equals(authResponse.getChallengeName()))
             {
                 logger.debug("{} attempted to sign in with temporary password", emailAddress);
                 reportResult(response, Constants.ResponseMessages.FORCE_PASSWORD_CHANGE);
             }
             else
             {
-                throw new RuntimeException("unexpected challenge on signin: " + cognitoResponse.getChallengeName());
+                throw new RuntimeException("unexpected challenge on signin: " + authResponse.getChallengeName());
             }
         }
         catch (UserNotFoundException ex)

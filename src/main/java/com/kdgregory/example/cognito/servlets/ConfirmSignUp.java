@@ -71,15 +71,15 @@ public class ConfirmSignUp extends AbstractCognitoServlet
                     .withUserPoolId(cognitoPoolId())
                     .withSession(initialResponse.getSession());
 
-            AdminRespondToAuthChallengeResult finalResponse = cognitoClient.adminRespondToAuthChallenge(finalRequest);
-            if (StringUtil.isBlank(finalResponse.getChallengeName()))
+            AdminRespondToAuthChallengeResult challengeResponse = cognitoClient.adminRespondToAuthChallenge(finalRequest);
+            if (StringUtil.isBlank(challengeResponse.getChallengeName()))
             {
-                updateCredentialCookies(response, finalResponse.getAuthenticationResult());
+                updateCredentialCookies(response, challengeResponse.getAuthenticationResult());
                 reportResult(response, Constants.ResponseMessages.LOGGED_IN);
             }
             else
             {
-                throw new RuntimeException("unexpected challenge: " + finalResponse.getChallengeName());
+                throw new RuntimeException("unexpected challenge: " + challengeResponse.getChallengeName());
             }
         }
         catch (InvalidPasswordException ex)

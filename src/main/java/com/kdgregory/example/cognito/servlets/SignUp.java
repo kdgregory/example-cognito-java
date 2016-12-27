@@ -69,7 +69,7 @@ public class SignUp extends AbstractCognitoServlet
     @Override
     public String getServletInfo()
     {
-        return "Handles user signup";
+        return "Handles the first stage of user signup, creating the user entry";
     }
 
 }
