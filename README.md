@@ -1,4 +1,12 @@
-# A Java Web-app Using AWS Cognito
+# This project has been archived
+
+It has been two years since I've worked with Cognito. At the time, this was the best approach that I could come up with,
+but I've been told that it's no longer appropriate.
+
+You are welcome to fork this project, modify it, do whatever you want within the constraints of the Apache 2 License.
+But I'm no longer maintaining it, and don't have the knowledge to answer your questions.
+
+----
 
 > This is the example code for a [blog post](http://blog.kdgregory.com/2016/12/server-side-authentication-with-amazon.html).
   Please read that post before downloading and building this project, as it explains a lot of the decisions that I made.
@@ -30,3 +38,5 @@ Update `src/main/webapp/WEB-INF/web.xml`, setting the initialization parameters 
 You can build with Maven and deploy to your favorite app-server, import into your favorite IDE, or run with the [Jetty plugin](https://www.eclipse.org/jetty/documentation/9.4.x/jetty-maven-plugin.html):
 
     mvn jetty:run
+
+The web-app entry-point is [http://localhost:8080/cognito-webapp/](http://localhost:8080/cognito-webapp/).
